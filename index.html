@@ -1,0 +1,933 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Animations in AngularJS</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/default.css">
+    <link rel="stylesheet" href="css/overrides.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body id="body">
+		<div class="reveal">
+
+			<div class="slides">
+				<section>
+          <h2><span class="em4">Animations</span> in <span class="em2">AngularJS</span></h2>
+          <p>
+            Supercharge your ng code with some high level animations
+          </p>
+        </section>
+
+				<section>
+					<h2 class="em">@yearofmoo</h2>
+          <div id="logo"></div>
+          <p>
+            <a class="em2" target="_blank" href="http://www.yearofmoo.com">http://www.yearofmoo.com</a>
+          </p>
+					<p>
+            Eight major AngularJS articles.
+					</p>
+
+					<p>
+            Great resource to learn about <span class="em3">AngularJS</span>.
+					</p>
+				</section>
+
+				<section>
+					<h2 class="em">Slides</h2>
+          <p>
+            <a target="_blank" href="http://yom.nu/nganimate-google-slides" rel="nofollow">http://yom.nu/ng-ani-goog</a>
+          </p>
+				</section>
+
+        <section>
+          <h2 class="em">Animations on the web (the good)</h2>
+          <p class="fragment fade-in">
+            Solid CSS3 animation browser support
+          </p>
+          <p class="fragment fade-in">
+            Great JS animations libraries available on the web
+          </p>
+          <p class="fragment fade-in">
+            Hardware-accelerated animations
+          </p>
+          <p class="fragment fade-in">
+            DOM APIs are getting better for animations
+          </p>
+        </section>
+
+        <section>
+          <h2 class="em">Animations on the web (the bad)</h2>
+          <p class="fragment fade-in">
+            Difficult to properly sync animations together
+          </p>
+          <p class="fragment fade-in">
+            CSS animation detection is tricky 
+          </p>
+          <p class="fragment fade-in">
+            Animations are coupled with HTML code
+          </p>
+          <p class="fragment fade-in">
+            Very little isolation from the rest of the application
+          </p>
+        </section>
+
+        <section>
+          <h2 class="em">Animations before ngAnimate</h2>
+          <p class="fragment fade-in">
+            ngClass was your best bet
+          </p>
+          <p class="fragment fade-in">
+            No way to hook into existing ng directives
+          </p>
+          <p class="fragment fade-in">
+            You can still make your own directives
+          </p>
+          <p class="fragment fade-in">
+            Too much of your own JS code is required
+          </p>
+          <p class="fragment fade-in">
+            HTML code may change due to the presence of animations
+          </p>
+        </section>
+
+        <section>
+          <h2 class="em">ngAnimate</h2>
+          <p class="fragment fade-in">
+            Introduced in AngularJS 1.1.4
+          </p>
+          <p class="fragment fade-in">
+            Enhanced in AngularJS 1.1.5
+          </p>
+          <p class="fragment fade-in">
+            Remastered &amp; Supercharged in 1.2
+          </p>
+          <p class="fragment fade-in">
+            Exists within a separate module
+          </p>
+        </section>
+
+        <section>
+          <h2 class="em">ngAnimate Features</h2>
+          <p class="fragment fade-in">
+            Supports CSS3 transition/keyframe animations natively
+          </p>
+          <p class="fragment fade-in">
+            JavaScript callbacks are also supported
+          </p>
+          <p class="fragment fade-in">
+            Automatically manages all state within animation events
+          </p>
+          <p class="fragment fade-in">
+            Various existing ng directives are animation aware
+          </p>
+          <p class="fragment fade-in">
+            Easy way to disable / enable animations
+          </p>
+        </section>
+
+        <section>
+          <h2 class="em">Benefits of using ngAnimate</h2>
+          <p class="fragment fade-in">
+            Uses only CSS classes to reference animations
+          </p>
+          <p class="fragment fade-in">
+            All animation code is isolated
+          </p>
+          <p class="fragment fade-in">
+            CSS and JS code is plug and play
+          </p>
+          <p class="fragment fade-in">
+            Handles all sniffing, detection and computations for you
+          </p>
+          <p class="fragment fade-in">
+            Highly performant
+          </p>
+        </section>
+
+        <section>
+          <h2 class="em">Basic Use</h2>
+          <p class="fragment fade-in">
+            Include <span class="em2">angular-animate.js</span> into your application 
+          </p>
+          <p class="fragment fade-in">
+            Set <span class="em2">ngAnimate</span> as a module dep
+          </p>
+          <p class="fragment fade-in">
+            Place a CSS class in your HTML code to reference the animation(s)
+          </p>
+          <p class="fragment fade-in">
+            Create an animation using CSS or JavaScript using the CSS class name
+          </p>
+        </section>
+
+        <section>
+          <h2 class="em">CSS3 Transition Animations</h2>
+          <p class="fragment fade-in">
+            Two CSS classes required.
+          </p>
+<div class="fragment fade-in">
+<pre class="big-code"><code data-trim>
+/* starting styles */
+.my-class.ng-EVENT {
+  transition:0.5s linear all;
+  transform:scale(0.1);
+}
+
+/* destination styles */
+.my-class.ng-EVENT.ng-EVENT-active {
+  transform:scale(1.5);
+}
+</code></pre>
+</div>
+        </section>
+
+        <section>
+          <h2 class="em">CSS3 Keyframe Animations</h2>
+          <p class="fragment fade-in">
+            Only one CSS class required.
+          </p>
+<div class="fragment fade-in">
+<pre class="big-code"><code data-trim>
+/* animation keyframe CSS */
+.my-class.ng-EVENT {
+  animation:0.5s my_animation;
+}
+
+/* animation CSS (from &amp; to) */
+@keyframes my_animation {
+  from { background:blue; }
+  to { background:red; }
+}
+</code></pre>
+</div>
+        </section>
+
+        <section>
+          <h2 class="em">JavaScript Animations</h2>
+          <p class="fragment fade-in">
+            Defined just like a service is defined
+          </p>
+<div class="fragment fade-in">
+<pre class="big-code"><code data-trim>
+ngModule.animation('.my-class', function(inject) {
+  return {
+    EVENT : function(element, done) {
+      /* run your animation using your own JS code */
+      runMyAnimation(element, done);
+
+      return function(cancelled) {
+        closeMyAnimation(element);
+      };
+    }
+  };
+});
+</code></pre>
+</div>
+        </section>
+
+        <section>
+          <h2 class="em">Let's put something together</h2>
+        </section>
+
+        <section>
+          <h2 class="em">Animation-aware Directives</h2>
+          <p class="fragment fade-in">
+            ngAnimate actives the following directives
+          </p>
+          <table class="yom-table fragment fade-in" id="animation-inputs">
+            <thead>
+              <tr>
+                <th>Directive</th>
+                <th>Events</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ngRepeat</td>
+                <td>enter, move, leave</td>
+              </tr>
+              <tr>
+                <td>ngView</td>
+                <td>enter, leave</td>
+              </tr>
+              <tr>
+                <td>ngSwitch, ngInclude, ngIf</td>
+                <td>enter, leave</td>
+              </tr>
+              <tr>
+                <td>ngClass</td>
+                <td>addClass, removeClass</td>
+              </tr>
+              <tr>
+                <td>ngHide, ngShow</td>
+                <td>addClass('.ng-hide') <br /> removeClass('.ng-hide')</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2 class="em">Animating ngRepeat</h2>
+          <p class="fragment fade-in">
+            Let's use CSS3 animations:
+              <span class="em2">enter</span>,
+              <span class="em2">leave</span>,
+              <span class="em2">move</span>
+          </p>
+<pre class="big-code fragment fade-in" style="text-align:center;"><code>
+&lt;div ng-repeat="item in items" class="repeater"&gt;&lt;/div&gt;
+
+</code></pre>
+<div class="cols three-col">
+  <div class="col">
+    <pre class="big-code fragment fade-in"><code data-trim>
+.repeater.ng-enter {
+  animation:
+    repeater_enter 1s;
+}
+@keyframes repeater_enter {
+  from { opacity:0; }
+  to { opacity:1; }
+}
+    </code></pre>
+  </div>
+  <div class="col">
+    <pre class="big-code fragment fade-in"><code data-trim>
+.repeater.ng-leave {
+  animation:
+    repeater_leave 1s;
+}
+@keyframes repeater_leave {
+  from { opacity:1; }
+  to { opacity:0; }
+}
+    </code></pre>
+  </div>
+  <div class="col">
+    <pre class="big-code fragment fade-in"><code data-trim>
+.repeater.ng-move {
+  animation:
+    repeater_move 1s;
+}
+@keyframes repeater_move {
+  from { opacity:1; }
+  to { opacity:0; }
+}
+    </code></pre>
+  </div>
+</div>
+        </section>
+
+        <section>
+          <h2 class="em">Animating ngInclude</h2>
+          <p class="fragment fade-in">
+            Let's use JS animations:
+              <span class="em2">enter</span>,
+              <span class="em2">leave</span>
+          </p>
+        </section>
+
+        <section>
+          <h2 class="em">Software that isn't tested</h2>
+          <p>
+            Untested software can lead to...
+          </p>
+          <p class="fragment fade-in">
+            Heavy DSL structures to reduce code
+          </p>
+          <p class="fragment fade-in">
+            Strange shortcuts and workarounds 
+          </p>
+          <p class="fragment fade-in">
+            Duplicate code
+          </p>
+        </section>
+
+        <section>
+          <h2 class="em">What is (fake) TDD?</h2>
+
+          <p class="fragment fade-in">
+            Keep fixing your code until you can't see any bugs
+          </p>
+
+          <p class="fragment fade-in">
+            Test using alerts and console logs
+          </p>
+
+          <p class="fragment fade-in">
+            Hotswap variables directly to corner bugs
+          </p>
+
+          <p class="fragment fade-in">
+            Refresh the page as much as you can
+          </p>
+
+          <p class="fragment fade-in">
+            If I can't see the bug then it's not there
+          </p>
+
+          <p class="fragment fade-in">
+            Only bother testing with Chrome
+          </p>
+
+          <p class="fragment fade-in">
+            Wait for your boss to yell at you...
+          </p>
+
+          <p class="fragment fade-in em">
+            Trace Driven Development
+          </p>
+        </section>
+
+        <section>
+          <h2 class="em">What is (real) TDD?</h2>
+
+          <p class="fragment fade-in">
+            Write your tests before or inline with during development
+          </p>
+
+          <p class="fragment fade-in">
+            Test using dump(), debugger and breakpoints
+          </p>
+
+          <p class="fragment fade-in">
+            Skip, focus and mock specific tests to corner certain bugs
+          </p>
+
+          <p class="fragment fade-in">
+            Autotest all your tests each time you update your code
+          </p>
+
+          <p class="fragment fade-in">
+            Existing tests keep track of previously-fixed bugs
+          </p>
+
+          <p class="fragment fade-in">
+            Test as many browsers and devices as you have access to
+          </p>
+
+          <p class="fragment fade-in">
+            Wait for your tests or CI server to yell at you...
+          </p>
+
+          <p class="fragment fade-in em">
+            Test Driven Development
+          </p>
+        </section>
+
+        <section>
+            <h2 class="em">Testing with AngularJS</h2>
+            <div>
+              <img src="./images/angularjs-logo.png" width="200" height="200" style="border-radius:10px; background:white; padding:10px;" />
+              <p class="fragment fade-in em2">
+                Unit testing is for your JavaScript code
+              </p>
+              <p class="fragment fade-in em2">
+                Unit testing uses Karma to run through all your tests
+              </p>
+              <p class="fragment fade-in em4">
+                E2E testing works as an integration test
+              </p>
+              <p class="fragment fade-in em4">
+                Protractor does the job!
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <h2 class="em">Unit Testing</h2>
+            <p class="fragment fade-in">
+              Tests out specific blocks (units) of code
+            </p>
+            <p class="fragment fade-in">
+              Mocking is used to isolate and trigger certain areas of code
+            </p>
+            <p class="fragment fade-in">
+              Tests can be skipped and focussed
+            </p>
+            <p class="fragment fade-in">
+              Karma allows you to debug directly in your tests
+            </p>
+            <p class="fragment fade-in">
+              All testing happens directly inside of each browser which is attached
+            </p>
+            <p class="fragment fade-in">
+              Coverage testing can hook into your unit tests
+            </p>
+          </section>
+				
+          <section>
+            <h2 class="em">End to End Testing (Protractor)</h2>
+            <p class="fragment fade-in">
+              Protractor is the new E2E tester for AngularJS
+            </p>
+            <p class="fragment fade-in">
+              Each test is known as an Integration Test
+            </p>
+            <p class="fragment fade-in">
+              Selenium + Special Matcher System
+            </p>
+            <p class="fragment fade-in">
+              Various AngularJS helper functions
+            </p>
+            <p class="fragment fade-in">
+              Tests against an "active" application
+            </p>
+            <p class="fragment fade-in">
+              Multiple Browsers
+            </p>
+          </section>
+
+        <section>
+            <h2 class="em">What tools do you need?</h2>
+            <p class="fragment fade-in">
+              NodeJS + NPM
+            </p>
+            <p class="fragment fade-in">
+              Bower
+            </p>
+            <p class="fragment fade-in">
+              Grunt
+            </p>
+            <p class="fragment fade-in">
+              Karma
+            </p>
+            <p class="fragment fade-in">
+              Protractor
+            </p>
+            <p class="fragment fade-in">
+              Coverage Tool (karma-coverage)
+            </p>
+          </section>
+
+          <section>
+            <h2 class="em">Karma</h2>
+            <p class="fragment fade-in">
+              Designed to run simple tests very fast
+            </p>
+
+            <p class="fragment fade-in">
+              Works with multiple browsers simultaneously 
+            </p>
+
+            <p class="fragment fade-in">
+              Collects and displays total results
+            </p>
+
+            <p class="fragment fade-in">
+              Works great with AngularJS
+            </p>
+          </section>
+
+          <section>
+            <h2 class="em">Grunt</h2>
+            <p class="fragment fade-in">
+              Used to run Karma from the command line
+            </p>
+
+            <p class="fragment fade-in">
+              Spawns and manages test and development servers 
+            </p>
+
+            <p class="fragment fade-in">
+              Can be used to manage Protractor
+            </p>
+
+            <p class="fragment fade-in">
+              Works great with AngularJS
+            </p>
+        </section>
+
+        <section>
+          <h2 class="em">Seed Repository</h2>
+          <p class="fragment fade-in">
+            Contains all the code required to make a well-tested AngularJS app
+          </p>
+          <p class="fragment fade-in em3">
+            <a target="_blabk" href="yom.nu/ngseed12" class="em3">yom.nu/ngseed12</a> 
+          </p>
+        </section>
+
+          <section>
+            <h2 class="em">AngularJS Unit Testing</h2>
+            <p class="fragment fade-in">
+              Run <span class="em2">grunt test:unit</span> or
+              <span class="em2">grunt autotest:unit</span> to run unit tests
+            </p>
+            <p class="fragment fade-in">
+              Application code is stored in <span class="em2">app</span>
+            </p>
+            <p class="fragment fade-in">
+              Unit test code is stored in <span class="em2">test/unit</span>
+            </p>
+<div class="fragment fade-in">
+<pre class="big-code"><code data-trim>
+it('should be green', function() {
+  var color = 'green';
+  expect(color).toBe('green');
+});
+</code></pre>
+</div>
+            <p class="fragment fade-in em2">
+              Lets see an example
+            </p>
+          </section>
+
+          <section>
+            <h2 class="em">angular-mocks.js</h2>
+            <p class="fragment fade-in">
+              Contains useful mocking tools to easily test AngularJS modules
+            </p>
+            <p class="fragment fade-in">
+              Just include the angular-mocks.js file into your karma-conf.js file
+            </p>
+<div class="fragment fade-in">
+<pre class="big-code"><code data-trim>
+describe('Testing my Module', function() {
+  beforeEach(module('myModule'));
+
+  it('should be green', inject(function(colorService) {
+    expect(colorService()).toBe('green');
+  }));
+});
+</code></pre>
+</div>
+          </section>
+
+          <section>
+            <h2 class="em">Conole.log(), alert() and dump()</h2>
+            <p class="fragment fade-in">
+              <span class="em4">console.log()</span> is useful for finding data
+            </p>
+            <p class="fragment fade-in">
+              <span class="em4">alert()</span> is only useful to block execution code
+            </p>
+            <p class="fragment fade-in">
+              <span class="em4">dump()</span> is the best for displaying data from a test
+            </p>
+            <p class="fragment fade-in em2">
+              Lets see an example
+            </p>
+          </section>
+
+          <section>
+            <h2 class="em">debugger</h2>
+            <p class="fragment fade-in">
+              Best and most interactive way to debug code
+            </p>
+            <p class="fragment fade-in">
+              Works in all major browsers
+            </p>
+            <p class="fragment fade-in">
+              Pauses the flow of execution
+            </p>
+            <p class="fragment fade-in em2">
+              Lets see an example
+            </p>
+          </section>
+
+          <section>
+            <h2 class="em">breakpoints</h2>
+            <p class="fragment fade-in">
+              Work the same way as debugger does
+            </p>
+            <p class="fragment fade-in">
+              You don't need access to the JavaScript code
+            </p>
+            <p class="fragment fade-in em2">
+              Lets see an example
+            </p>
+          </section>
+
+        <section>
+          <h2 class="em">Testing Controllers</h2>
+          <p class="fragment fade-in">
+            You want to test to see that the controller works
+          </p>
+
+          <p class="fragment fade-in">
+            And places expected data into the scope
+          </p>
+
+          <div class="fragment fade-in">
+<pre class="big-code"><code data-trim>
+it('should have a working myController',
+  inject(function($controller, $rootScope) {
+
+  var ctrl = $controller('MyCtrl', {
+    $scope : $rootScope 
+    //anything in here will act as a mock
+  });
+  expect($rootScope.data).toBe('something');
+}));
+</code></pre>
+          </div>
+
+        </section>
+
+        <section>
+          <h2 class="em">Testing Directives</h2>
+          <p class="fragment fade-in">
+            Create using $compile and then perform a digest
+          </p>
+
+          <div class="fragment fade-in">
+<pre class="big-code"><code data-trim>
+it('should have a working myDirective',
+  inject(function($compile, $rootScope, $document) {
+
+  var body = angular.element($document[0].body);
+  var element = angular.element('&lt;div my-directive&gt;&lt;/div&gt;');
+  body.append(element);
+
+  $compile(element)($rootScope);
+  $rootScope.$digest();
+  
+  expect(element.children().length).toBe(10);
+}));
+</code></pre>
+            <p class="fragment fade-in em2">
+              Lets see an example
+            </p>
+          </div>
+
+        </section>
+
+        <section>
+          <h2 class="em">Testing Services/Factories</h2>
+          <p class="fragment fade-in">
+            Inject the service and test from there...
+          </p>
+
+          <div class="fragment fade-in">
+<pre class="big-code"><code data-trim>
+it('should have a working myDirective',
+  inject(function(urlPrefixer, $location) {
+
+  urlPrefixer('/home');
+  expect($location.path()).toBe('/public/home');
+}));
+</code></pre>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="em">Testing Services/Factories using Mocks</h2>
+          <p class="fragment fade-in">
+            Use Module to mock things out...
+          </p>
+
+          <div class="fragment fade-in">
+<pre class="big-code"><code data-trim>
+it('should have a working myDirective',
+  var interceptedPath;
+  module(function($provider) {
+    $provider.provide('$location', {
+      path : function(p) {
+        interceptedPath = p;
+      }
+    });
+  });
+  inject(function(urlCounter) {
+    urlPrefixer('/home');
+    expect(interceptedPath).toBe('/admin/home');
+  })
+);
+</code></pre>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="em">Mocks vs Spies vs Stubs</h2>
+          <p class="fragment fade-in">
+            Mocks replace entire objects/interfaces to control data flow
+          </p>
+
+          <p class="fragment fade-in">
+            Spies replace/patch existing functions to intercept behavior
+          </p>
+
+          <p class="fragment fade-in">
+            Stubs hijack the return value of a function to control program flow
+          </p>
+
+          <p class="fragment fade-in">
+            AngularJS has mocks built-in. Spies and Stubs can be used with JavaScript
+          </p>
+        </section>
+
+        <section>
+          <h2 class="em">Testing Filters</h2>
+          <p class="fragment fade-in">
+            Filters are tested in the same way as services
+          </p>
+          <div class="fragment fade-in">
+<pre class="big-code"><code data-trim>
+it('should have a working even filter',
+  inject(function(evenFilter, $filter) {
+
+  expect(evenFilter([1,2,3,4])).toBe([2,4]);
+  expect($filter('even')([1,2,3,4])).toBe([2,4]);
+}));
+</code></pre>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="em">Testing Routes</h2>
+          <p class="fragment fade-in">
+            Routes are testing via the $location
+          </p>
+          <div class="fragment fade-in">
+<pre class="big-code"><code data-trim>
+it('should have a working /home route', inject(function($location, $rootScope) {
+  $location.path('/home');
+  $rootScope.$digest();
+
+  expect($location.path()).toBe('/home');
+  expect($route.current.controller).toBe('HomeCtrl');
+}));
+</code></pre>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="em">E2E Testing using Protractor</h2>
+          <p class="fragment fade-in">
+            Protractor is close to being released
+          </p>
+          <p class="fragment fade-in">
+            Tests can be run using <span class="em2">grunt test:e2e</span>
+          </p>
+        </section>
+
+        <section>
+          <h2 class="em">Basic Protractor Test</h2>
+<pre class="big-code"><code data-trim>
+describe('Home Pages', function() {
+
+  var ptor = protractor.getInstance();
+
+  it('should load the homepage', function() {
+    ptor.get('/#home');
+    expect(
+      ptor.findElement(protractor.By.id('view-container')).getText()
+    ).toBe('Welcome Home...');
+  });
+
+});
+</code></pre>
+          <p class="fragment fade-in em2">
+            Lets see an example
+          </p>
+        </section>
+
+        <section>
+          <h2 class="em">Where to find more info about Protractor...</h2>
+          <p class="fragment fade-in">
+            <a href="https://github.com/angular/protractor/tree/master/docs" target="_blank">Protractor Docs</a> 
+          </p>
+          <p class="fragment fade-in">
+            <a href="https://code.google.com/p/selenium/wiki/WebDriverJs" target="_blank">WebDriver.js Docs</a> 
+          </p>
+          <p class="fragment fade-in">
+            <a href="https://www.youtube.com/watch?v=idb6hOxlyb8" target="_blank">Youtube Intro Video to Protractor</a> 
+          </p>
+        </section>
+
+        <section>
+          <h2 class="em">Test Coverage</h2>
+          <p class="fragment fade-in">
+            Comes bundled into Karma via <span class="em">karma-coverage</span>
+          </p>
+          <p class="fragment fade-in">
+            Gives you a full breakdown of what tests were captured and what tests were not
+          </p>
+          <p class="fragment fade-in">
+            Run using "<span class="em2">grunt coverage</span>".
+          </p>
+          <p class="fragment fade-in em4">
+            Lets see an example
+          </p>
+        </section>
+
+        <section>
+          <h2 class="em">Thank you!</h2>
+          <p class="fragment fade-in">
+            Thank you for making this possible
+          </p>
+          <div id="slogo"></div>
+          <p class="fragment fade-in">
+            Please use and experiment with testing and try out Protractor!
+          </p>
+          <p class="fragment fade-in">
+					  <a href="https://twitter.com/yearofmoo" class="em" target="_blank">@yearofmoo</a>
+          </p>
+          <p class="fragment fade-in">
+            Feel free to contact me via <span class="em">matias@yearofmoo.com</span>
+          </p>
+        </section>
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+        width: 1280,
+        height: 700,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+		</script>
+
+	</body>
+</html>
