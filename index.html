@@ -31,7 +31,8 @@
 		<![endif]-->
 	</head>
 
-	<body id="body">
+	<body id="body" class=" no-clouds no-grass">
+    <div class="clouds"></div>
 		<div class="reveal">
 
 			<div class="slides">
@@ -39,6 +40,9 @@
           <h2><span class="em4">Animations</span> in <span class="em2">AngularJS</span></h2>
           <p>
             Supercharge your ng code with some high level animations
+          </p>
+          <p>
+            By: Matias Niemelä
           </p>
         </section>
 
@@ -60,7 +64,7 @@
 				<section>
 					<h2 class="em">Slides</h2>
           <p>
-            <a target="_blank" href="http://yom.nu/nganimate-google-slides" rel="nofollow">http://yom.nu/ng-ani-goog</a>
+            <a target="_blank" href="http://yom.nu/ng-ani-goog-slides" rel="nofollow">http://yom.nu/ng-ani-goog-slides</a>
           </p>
 				</section>
 
@@ -228,6 +232,19 @@
         </section>
 
         <section>
+          <h2 class="em">More Info about CSS transitions/animations</h2>
+          <p class="fragment fade-in">
+            Checks CSS classes each time on an element
+          </p>
+          <p class="fragment fade-in">
+            CSS styles can be changed via media queries
+          </p>
+          <p class="fragment fade-in">
+            An additional CSS stylesheet can be added/removed
+          </p>
+        </section>
+
+        <section>
           <h2 class="em">JavaScript Animations</h2>
           <p class="fragment fade-in">
             Defined just like a service is defined
@@ -248,10 +265,6 @@ ngModule.animation('.my-class', function(inject) {
 });
 </code></pre>
 </div>
-        </section>
-
-        <section>
-          <h2 class="em">Let's put something together</h2>
         </section>
 
         <section>
@@ -289,6 +302,83 @@ ngModule.animation('.my-class', function(inject) {
               </tr>
             </tbody>
           </table>
+        </section>
+
+        <section>
+          <h2 class="em">Let's put something together</h2>
+          <p class="fragment fade-in">
+            <a target="_blank" href="http://yom.nu/ng-ani-google-simple" rel="nofollow">http://yom.nu/ng-ani-google-simple</a>
+          </p>
+          <p class="fragment fade-in">
+            <a target="_blank" href="http://yom.nu/ng-ani-goog-code" rel="nofollow">http://yom.nu/ng-ani-goog-code</a>
+          </p>
+        </section>
+
+        <section>
+          <h2 class="em">Steps involved in Animation</h2>
+          <p class="fragment fade-in">
+            1. A scope change happens and some directive does its thing
+          </p>
+          <p class="fragment fade-in">
+            2. A DOM operation is called which is handled by the <span class="em2">$animate</span> service
+          </p>
+          <p class="fragment fade-in">
+            3. An extra digest occurs or the animation starts right away
+          </p>
+          <p class="fragment fade-in">
+            4. Checks for anything disabled
+          </p>
+          <p class="fragment fade-in">
+            5. Grabs the CSS classes and triggers the animations that match that CSS class
+          </p>
+          <p class="fragment fade-in">
+            6. CSS transitions / keyframes + JS animations are triggered one by one
+          </p>
+          <p class="fragment fade-in">
+            7. getComputedStyle -> animate CSS transitions/animations
+          </p>
+          <p class="fragment fade-in">
+            8. Close the animation -> perform any required DOM operations
+          </p>
+        </section>
+
+        <section>
+          <h2 class="em">Animating ngView</h2>
+          <p class="fragment fade-in">
+            Let's use CSS transitions:
+              <span class="em2">enter</span>,
+              <span class="em2">leave</span>
+          </p>
+<div class="cols two-col">
+  <div class="col">
+    <pre class="big-code fragment fade-in"><code data-trim>
+.view.ng-enter {
+  transition:1s linear all; 
+  position:relative;
+  left:100px;
+  opacity:0;
+}
+.view.ng-enter.ng-enter-active {
+  opacity:1;
+  left:0px;
+}
+    </code></pre>
+  </div>
+  <div class="col">
+    <pre class="big-code fragment fade-in"><code data-trim>
+.view.ng-leave {
+  transition:1s linear all; 
+  position:relative;
+  opacity:1;
+  left:0px;
+}
+.view.ng-leave.ng-leave-active {
+  opacity:0;
+  left:-100px;
+}
+    </code></pre>
+  </div>
+</div>
         </section>
 
         <section>
@@ -346,544 +436,213 @@ ngModule.animation('.my-class', function(inject) {
         <section>
           <h2 class="em">Animating ngInclude</h2>
           <p class="fragment fade-in">
-            Let's use JS animations:
+            Let's use JS Animations
               <span class="em2">enter</span>,
               <span class="em2">leave</span>
           </p>
-        </section>
+<pre class="big-code fragment fade-in" style="text-align:center;"><code>
+&lt;div ng-include="tpl" class="slide"&gt;&lt;/div&gt;
 
-        <section>
-          <h2 class="em">Software that isn't tested</h2>
-          <p>
-            Untested software can lead to...
-          </p>
-          <p class="fragment fade-in">
-            Heavy DSL structures to reduce code
-          </p>
-          <p class="fragment fade-in">
-            Strange shortcuts and workarounds 
-          </p>
-          <p class="fragment fade-in">
-            Duplicate code
-          </p>
-        </section>
-
-        <section>
-          <h2 class="em">What is (fake) TDD?</h2>
-
-          <p class="fragment fade-in">
-            Keep fixing your code until you can't see any bugs
-          </p>
-
-          <p class="fragment fade-in">
-            Test using alerts and console logs
-          </p>
-
-          <p class="fragment fade-in">
-            Hotswap variables directly to corner bugs
-          </p>
-
-          <p class="fragment fade-in">
-            Refresh the page as much as you can
-          </p>
-
-          <p class="fragment fade-in">
-            If I can't see the bug then it's not there
-          </p>
-
-          <p class="fragment fade-in">
-            Only bother testing with Chrome
-          </p>
-
-          <p class="fragment fade-in">
-            Wait for your boss to yell at you...
-          </p>
-
-          <p class="fragment fade-in em">
-            Trace Driven Development
-          </p>
-        </section>
-
-        <section>
-          <h2 class="em">What is (real) TDD?</h2>
-
-          <p class="fragment fade-in">
-            Write your tests before or inline with during development
-          </p>
-
-          <p class="fragment fade-in">
-            Test using dump(), debugger and breakpoints
-          </p>
-
-          <p class="fragment fade-in">
-            Skip, focus and mock specific tests to corner certain bugs
-          </p>
-
-          <p class="fragment fade-in">
-            Autotest all your tests each time you update your code
-          </p>
-
-          <p class="fragment fade-in">
-            Existing tests keep track of previously-fixed bugs
-          </p>
-
-          <p class="fragment fade-in">
-            Test as many browsers and devices as you have access to
-          </p>
-
-          <p class="fragment fade-in">
-            Wait for your tests or CI server to yell at you...
-          </p>
-
-          <p class="fragment fade-in em">
-            Test Driven Development
-          </p>
-        </section>
-
-        <section>
-            <h2 class="em">Testing with AngularJS</h2>
-            <div>
-              <img src="./images/angularjs-logo.png" width="200" height="200" style="border-radius:10px; background:white; padding:10px;" />
-              <p class="fragment fade-in em2">
-                Unit testing is for your JavaScript code
-              </p>
-              <p class="fragment fade-in em2">
-                Unit testing uses Karma to run through all your tests
-              </p>
-              <p class="fragment fade-in em4">
-                E2E testing works as an integration test
-              </p>
-              <p class="fragment fade-in em4">
-                Protractor does the job!
-              </p>
-            </div>
-          </section>
-
-          <section>
-            <h2 class="em">Unit Testing</h2>
-            <p class="fragment fade-in">
-              Tests out specific blocks (units) of code
-            </p>
-            <p class="fragment fade-in">
-              Mocking is used to isolate and trigger certain areas of code
-            </p>
-            <p class="fragment fade-in">
-              Tests can be skipped and focussed
-            </p>
-            <p class="fragment fade-in">
-              Karma allows you to debug directly in your tests
-            </p>
-            <p class="fragment fade-in">
-              All testing happens directly inside of each browser which is attached
-            </p>
-            <p class="fragment fade-in">
-              Coverage testing can hook into your unit tests
-            </p>
-          </section>
-				
-          <section>
-            <h2 class="em">End to End Testing (Protractor)</h2>
-            <p class="fragment fade-in">
-              Protractor is the new E2E tester for AngularJS
-            </p>
-            <p class="fragment fade-in">
-              Each test is known as an Integration Test
-            </p>
-            <p class="fragment fade-in">
-              Selenium + Special Matcher System
-            </p>
-            <p class="fragment fade-in">
-              Various AngularJS helper functions
-            </p>
-            <p class="fragment fade-in">
-              Tests against an "active" application
-            </p>
-            <p class="fragment fade-in">
-              Multiple Browsers
-            </p>
-          </section>
-
-        <section>
-            <h2 class="em">What tools do you need?</h2>
-            <p class="fragment fade-in">
-              NodeJS + NPM
-            </p>
-            <p class="fragment fade-in">
-              Bower
-            </p>
-            <p class="fragment fade-in">
-              Grunt
-            </p>
-            <p class="fragment fade-in">
-              Karma
-            </p>
-            <p class="fragment fade-in">
-              Protractor
-            </p>
-            <p class="fragment fade-in">
-              Coverage Tool (karma-coverage)
-            </p>
-          </section>
-
-          <section>
-            <h2 class="em">Karma</h2>
-            <p class="fragment fade-in">
-              Designed to run simple tests very fast
-            </p>
-
-            <p class="fragment fade-in">
-              Works with multiple browsers simultaneously 
-            </p>
-
-            <p class="fragment fade-in">
-              Collects and displays total results
-            </p>
-
-            <p class="fragment fade-in">
-              Works great with AngularJS
-            </p>
-          </section>
-
-          <section>
-            <h2 class="em">Grunt</h2>
-            <p class="fragment fade-in">
-              Used to run Karma from the command line
-            </p>
-
-            <p class="fragment fade-in">
-              Spawns and manages test and development servers 
-            </p>
-
-            <p class="fragment fade-in">
-              Can be used to manage Protractor
-            </p>
-
-            <p class="fragment fade-in">
-              Works great with AngularJS
-            </p>
-        </section>
-
-        <section>
-          <h2 class="em">Seed Repository</h2>
-          <p class="fragment fade-in">
-            Contains all the code required to make a well-tested AngularJS app
-          </p>
-          <p class="fragment fade-in em3">
-            <a target="_blabk" href="yom.nu/ngseed12" class="em3">yom.nu/ngseed12</a> 
-          </p>
-        </section>
-
-          <section>
-            <h2 class="em">AngularJS Unit Testing</h2>
-            <p class="fragment fade-in">
-              Run <span class="em2">grunt test:unit</span> or
-              <span class="em2">grunt autotest:unit</span> to run unit tests
-            </p>
-            <p class="fragment fade-in">
-              Application code is stored in <span class="em2">app</span>
-            </p>
-            <p class="fragment fade-in">
-              Unit test code is stored in <span class="em2">test/unit</span>
-            </p>
-<div class="fragment fade-in">
-<pre class="big-code"><code data-trim>
-it('should be green', function() {
-  var color = 'green';
-  expect(color).toBe('green');
+</code></pre>
+<div class="cols two-col">
+  <div class="col">
+    <pre class="big-code fragment fade-in"><code data-trim>
+myModule.animation('.slide', function() {
+  return {
+    enter : function(element, done) {
+      $(element)
+        .css({ opacity:0 })
+        .animate({ opacity:1 }, done);
+    },
+    //...
+    </code></pre>
+  </div>
+  <div class="col">
+    <pre class="big-code fragment fade-in"><code data-trim>
+    leave : function(element, done) {
+      $(element).animate({
+        opacity:0
+      }, done);
+    }
+  };
 });
-</code></pre>
+    </code></pre>
+  </div>
 </div>
-            <p class="fragment fade-in em2">
-              Lets see an example
-            </p>
-          </section>
+        </section>
 
-          <section>
-            <h2 class="em">angular-mocks.js</h2>
-            <p class="fragment fade-in">
-              Contains useful mocking tools to easily test AngularJS modules
-            </p>
-            <p class="fragment fade-in">
-              Just include the angular-mocks.js file into your karma-conf.js file
-            </p>
-<div class="fragment fade-in">
-<pre class="big-code"><code data-trim>
-describe('Testing my Module', function() {
-  beforeEach(module('myModule'));
+        <section>
+          <h2 class="em">Animating ngShow / ngHide</h2>
+          <p class="fragment fade-in">
+            Let's use JS Animations
+              <span class="em2">ng-hide-remove</span>,
+              <span class="em2">ng-hide-add</span>
+          </p>
+<pre class="big-code fragment fade-in" style="text-align:center;"><code>
+&lt;div ng-hide="bool" class="show-hide"&gt;&lt;/div&gt;
 
-  it('should be green', inject(function(colorService) {
-    expect(colorService()).toBe('green');
-  }));
-});
 </code></pre>
+<div class="cols two-col">
+  <div class="col">
+    <pre class="big-code fragment fade-in"><code data-trim>
+.show-hide.ng-hide-add {
+  transition:0.5s linear all;
+  opacity:1;
+}
+.show-hide.ng-hide-add
+  .ng-hide-add-active {
+
+  opacity:0;
+}
+    </code></pre>
+  </div>
+  <div class="col">
+    <pre class="big-code fragment fade-in"><code data-trim>
+.show-hide.ng-hide-remove {
+  transition:0.5s linear all;
+  opacity:0;
+}
+.show-hide.ng-hide-remove
+  .ng-hide-remove-active {
+
+  opacity:1;
+}
+    </code></pre>
+  </div>
 </div>
-          </section>
-
-          <section>
-            <h2 class="em">Conole.log(), alert() and dump()</h2>
-            <p class="fragment fade-in">
-              <span class="em4">console.log()</span> is useful for finding data
-            </p>
-            <p class="fragment fade-in">
-              <span class="em4">alert()</span> is only useful to block execution code
-            </p>
-            <p class="fragment fade-in">
-              <span class="em4">dump()</span> is the best for displaying data from a test
-            </p>
-            <p class="fragment fade-in em2">
-              Lets see an example
-            </p>
-          </section>
-
-          <section>
-            <h2 class="em">debugger</h2>
-            <p class="fragment fade-in">
-              Best and most interactive way to debug code
-            </p>
-            <p class="fragment fade-in">
-              Works in all major browsers
-            </p>
-            <p class="fragment fade-in">
-              Pauses the flow of execution
-            </p>
-            <p class="fragment fade-in em2">
-              Lets see an example
-            </p>
-          </section>
-
-          <section>
-            <h2 class="em">breakpoints</h2>
-            <p class="fragment fade-in">
-              Work the same way as debugger does
-            </p>
-            <p class="fragment fade-in">
-              You don't need access to the JavaScript code
-            </p>
-            <p class="fragment fade-in em2">
-              Lets see an example
-            </p>
-          </section>
-
-        <section>
-          <h2 class="em">Testing Controllers</h2>
-          <p class="fragment fade-in">
-            You want to test to see that the controller works
-          </p>
-
-          <p class="fragment fade-in">
-            And places expected data into the scope
-          </p>
-
-          <div class="fragment fade-in">
-<pre class="big-code"><code data-trim>
-it('should have a working myController',
-  inject(function($controller, $rootScope) {
-
-  var ctrl = $controller('MyCtrl', {
-    $scope : $rootScope 
-    //anything in here will act as a mock
-  });
-  expect($rootScope.data).toBe('something');
-}));
-</code></pre>
-          </div>
-
         </section>
 
         <section>
-          <h2 class="em">Testing Directives</h2>
+          <h2 class="em">Fully animating application</h2>
           <p class="fragment fade-in">
-            Create using $compile and then perform a digest
+            <a target="_blank" href="http://yom.nu/ng-ani-goog-advanced" rel="nofollow">http://yom.nu/ng-ani-goog-advanced</a>
           </p>
-
-          <div class="fragment fade-in">
-<pre class="big-code"><code data-trim>
-it('should have a working myDirective',
-  inject(function($compile, $rootScope, $document) {
-
-  var body = angular.element($document[0].body);
-  var element = angular.element('&lt;div my-directive&gt;&lt;/div&gt;');
-  body.append(element);
-
-  $compile(element)($rootScope);
-  $rootScope.$digest();
-  
-  expect(element.children().length).toBe(10);
-}));
-</code></pre>
-            <p class="fragment fade-in em2">
-              Lets see an example
-            </p>
-          </div>
-
         </section>
 
         <section>
-          <h2 class="em">Testing Services/Factories</h2>
+          <h2 class="em">$animate</h2>
           <p class="fragment fade-in">
-            Inject the service and test from there...
+            Used to <span class="em2">trigger</span> animations inside directives
+          </p>
+          <p class="fragment fade-in">
+            Skips all animations when disabled or when ngAnimate is not included 
           </p>
 
-          <div class="fragment fade-in">
-<pre class="big-code"><code data-trim>
-it('should have a working myDirective',
-  inject(function(urlPrefixer, $location) {
-
-  urlPrefixer('/home');
-  expect($location.path()).toBe('/public/home');
-}));
-</code></pre>
-          </div>
+        <table class="yom-table fragment fade-in" id="animation-members">
+          <thead>
+            <th class="first">Event</th>
+            <th class="em">class="klass ng-EVENT"</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="first">enter</td>
+              <td>$animate.enter(<span class="em2">element, parent, after, done</span>)</td>
+            </tr>
+            <tr>
+              <td class="first">leave</td>
+              <td>$animate.leave(<span class="em2">element, done</span>)</td>
+            </tr>
+            <tr>
+              <td class="first">move</td>
+              <td>$animate.move(<span class="em2">element, parent, after, done</span>)</td>
+            </tr>
+            <tr>
+              <td class="first">addClass</td>
+              <td>$animate.addClass(<span class="em2">element, className, done</span>)</td>
+            </tr>
+            <tr>
+              <td class="first">removeClass</td>
+              <td>$animate.removeClass(<span class="em2">element, className, done</span>)</td>
+            </tr>
+            <tr>
+              <td class="first">enabled</td>
+              <td>$animate.enabled(<span class="em2">bool</span>)</td>
+            </tr>
+          </tbody>
+        </table>
         </section>
 
         <section>
-          <h2 class="em">Testing Services/Factories using Mocks</h2>
+          <h2 class="em">$animate under the hood</h2>
           <p class="fragment fade-in">
-            Use Module to mock things out...
+            Skips the former animation is a previous animation is called
           </p>
+          <p class="fragment fade-in">
+            Skips all child animations when a parent animation is animating
+          </p>
+          <p class="fragment fade-in">
+            Caches subsequent getComputedStyle lookups to speed animations 
+          </p>
+          <p class="fragment fade-in">
+            Queues all animations into as few reflows as possible
+          </p>
+        </section>
 
-          <div class="fragment fade-in">
+        <section>
+          <h2 class="em">Testing (sync)</h2>
+          <p class="fragment fade-in">
+            Test to see that an animation gets fired
+          </p>
+          <p class="fragment fade-in">
+            1. Create a JS animation within your spec
+          </p>
+          <p class="fragment fade-in">
+            2. Create a fake CSS style and examine the generated CSS classes
+          </p>
 <pre class="big-code"><code data-trim>
-it('should have a working myDirective',
-  var interceptedPath;
-  module(function($provider) {
-    $provider.provide('$location', {
-      path : function(p) {
-        interceptedPath = p;
-      }
+it('should animate', function() {
+  var interceptedClass;
+  module(function($animateProvider) {
+    $animateProvider.register('.animated', function() {
+      return {
+        addClass : function(element, className, done) {
+          interceptedClass = className;
+          done();
+        }
+      };
     });
   });
-  inject(function(urlCounter) {
-    urlPrefixer('/home');
-    expect(interceptedPath).toBe('/admin/home');
-  })
-);
-</code></pre>
-          </div>
-        </section>
+  inject(function($compile, $rootScope, $rootElement) {
+    var element = $compile('<div class="animated" ng-class="{on:on}"></div>')($rootScope);
+    $rootElement.append(element);
 
-        <section>
-          <h2 class="em">Mocks vs Spies vs Stubs</h2>
-          <p class="fragment fade-in">
-            Mocks replace entire objects/interfaces to control data flow
-          </p>
+    $rootScope.on = true;
+    $rootScope.$digest();
 
-          <p class="fragment fade-in">
-            Spies replace/patch existing functions to intercept behavior
-          </p>
-
-          <p class="fragment fade-in">
-            Stubs hijack the return value of a function to control program flow
-          </p>
-
-          <p class="fragment fade-in">
-            AngularJS has mocks built-in. Spies and Stubs can be used with JavaScript
-          </p>
-        </section>
-
-        <section>
-          <h2 class="em">Testing Filters</h2>
-          <p class="fragment fade-in">
-            Filters are tested in the same way as services
-          </p>
-          <div class="fragment fade-in">
-<pre class="big-code"><code data-trim>
-it('should have a working even filter',
-  inject(function(evenFilter, $filter) {
-
-  expect(evenFilter([1,2,3,4])).toBe([2,4]);
-  expect($filter('even')([1,2,3,4])).toBe([2,4]);
-}));
-</code></pre>
-          </div>
-        </section>
-
-        <section>
-          <h2 class="em">Testing Routes</h2>
-          <p class="fragment fade-in">
-            Routes are testing via the $location
-          </p>
-          <div class="fragment fade-in">
-<pre class="big-code"><code data-trim>
-it('should have a working /home route', inject(function($location, $rootScope) {
-  $location.path('/home');
-  $rootScope.$digest();
-
-  expect($location.path()).toBe('/home');
-  expect($route.current.controller).toBe('HomeCtrl');
-}));
-</code></pre>
-          </div>
-        </section>
-
-        <section>
-          <h2 class="em">E2E Testing using Protractor</h2>
-          <p class="fragment fade-in">
-            Protractor is close to being released
-          </p>
-          <p class="fragment fade-in">
-            Tests can be run using <span class="em2">grunt test:e2e</span>
-          </p>
-        </section>
-
-        <section>
-          <h2 class="em">Basic Protractor Test</h2>
-<pre class="big-code"><code data-trim>
-describe('Home Pages', function() {
-
-  var ptor = protractor.getInstance();
-
-  it('should load the homepage', function() {
-    ptor.get('/#home');
-    expect(
-      ptor.findElement(protractor.By.id('view-container')).getText()
-    ).toBe('Welcome Home...');
+    expect(interceptedClass).toBe('on');
   });
-
 });
 </code></pre>
-          <p class="fragment fade-in em2">
-            Lets see an example
+        </section>
+
+        <section>
+          <h2 class="em">Testing (async)</h2>
+          <p class="fragment fade-in">
+            Wait for the entire duration of the animation and compare the styles 
+          </p>
+          <p class="fragment fade-in">
+            Use within the tests if possible to avoid async calls
           </p>
         </section>
 
         <section>
-          <h2 class="em">Where to find more info about Protractor...</h2>
+          <h2 class="em">New plans (post 1.2)</h2>
           <p class="fragment fade-in">
-            <a href="https://github.com/angular/protractor/tree/master/docs" target="_blank">Protractor Docs</a> 
+            Improve the compatibility of CSS code
           </p>
           <p class="fragment fade-in">
-            <a href="https://code.google.com/p/selenium/wiki/WebDriverJs" target="_blank">WebDriver.js Docs</a> 
+            Provide a better API for JS animations
           </p>
           <p class="fragment fade-in">
-            <a href="https://www.youtube.com/watch?v=idb6hOxlyb8" target="_blank">Youtube Intro Video to Protractor</a> 
-          </p>
-        </section>
-
-        <section>
-          <h2 class="em">Test Coverage</h2>
-          <p class="fragment fade-in">
-            Comes bundled into Karma via <span class="em">karma-coverage</span>
-          </p>
-          <p class="fragment fade-in">
-            Gives you a full breakdown of what tests were captured and what tests were not
-          </p>
-          <p class="fragment fade-in">
-            Run using "<span class="em2">grunt coverage</span>".
-          </p>
-          <p class="fragment fade-in em4">
-            Lets see an example
+            Staggering animations in both CSS AND JS
           </p>
         </section>
 
         <section>
           <h2 class="em">Thank you!</h2>
-          <p class="fragment fade-in">
-            Thank you for making this possible
-          </p>
           <div id="slogo"></div>
           <p class="fragment fade-in">
-            Please use and experiment with testing and try out Protractor!
+            Please use and experiment with animations so that we can make this tool better
           </p>
           <p class="fragment fade-in">
 					  <a href="https://twitter.com/yearofmoo" class="em" target="_blank">@yearofmoo</a>
@@ -927,6 +686,20 @@ describe('Home Pages', function() {
 					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
 				]
 			});
+      Reveal.configure({
+        keyboard: {
+          '192': function() {
+            var on = document.body.className.indexOf('no-clouds') >= 0;
+            if(on) {
+              document.body.className = document.body.className.replace(' no-clouds','');
+              document.body.className = document.body.className.replace(' no-grass','');
+            }
+            else {
+              document.body.className += ' no-clouds no-grass';
+            }
+          }
+        }
+      });
 		</script>
 
 	</body>

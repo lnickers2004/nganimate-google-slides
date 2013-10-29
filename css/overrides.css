@@ -70,8 +70,12 @@
 }
 
 #body {
-  background:#232625;
+  background:#232625 url('./grass.png') no-repeat bottom left;
   box-shadow:inset #222 0 0 10px;
+}
+
+#body.no-grass {
+  background-image:none;
 }
 
 h1,h2,h3 {
@@ -205,4 +209,32 @@ body {
 
 .three-col .col {
   width:33%;
+}
+
+.clouds {
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:150px;
+  z-index:1000;
+  background-image:url('cloud.png'), url('cloud.png'), url('cloud.png'), url('cloud.png'), url('cloud.png'), url('cloud.png');
+  background-repeat:no-repeat;
+  background-position:10% -180px,
+                      40% -150px,
+                      70% -190px,
+                      90% -200px;
+  -webkit-transition:0.5s linear all;
+  -moz-transition:0.5s linear all;
+  -o-transition:0.5s linear all;
+  transition:0.5s linear all;
+}
+
+.no-clouds .clouds {
+  opacity:0;
+  top:-100px;
+  background-position:8% -200px,
+                      38% -200px,
+                      72% -200px,
+                      99% -200px;
 }
